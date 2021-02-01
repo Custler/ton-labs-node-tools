@@ -349,6 +349,8 @@ impl ControlClient {
 
         let (s, pub_key) = self.process_command("exportpub", vec![perm_str].drain(..)).await?;
         log::trace!("{}", s);
+        let pubkey_str = &hex::encode_upper(&pub_key)[..];
+        println!("Elections key: {}", pubkey_str);
 
         let (s, _) = self.process_command("addpermkey", vec![perm_str, elect_time_str, expire_time_str].drain(..)).await?;
         log::trace!("{}", s);
@@ -359,6 +361,7 @@ impl ControlClient {
         let (s, adnl) = self.process_command("newkey", Vec::<String>::new().drain(..)).await?;
         log::trace!("{}", s);
         let adnl_str = &hex::encode_upper(&adnl)[..];
+        println!("ADNL key: {}", adnl_str);
 
         let (s, _) = self.process_command("addadnl", vec![adnl_str, "0"].drain(..)).await?;
         log::trace!("{}", s);
